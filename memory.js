@@ -30,3 +30,13 @@ for (const card of gameState.cards) {
   cardEl.innerText = card.name;
   gameboard.append(cardEl);
 }
+
+for (const player of gameState.players) {
+  const playerEl = document.createElement("div");
+  playerEl.classList.add("player");
+  playerEl.innerHTML = `
+    <label>Player: ${player.name}</label>
+    <p>Score: ${player.score}</p>
+  `;
+  scoreboard.append(playerEl);
+}
