@@ -4,6 +4,8 @@
 
 ## Nouns
 - Grid of cards
+  - Each Card
+  - Each Card has a number
 - Play info
   - Score/#of pairs found
   - Name
