@@ -10,11 +10,11 @@ const gameState = {
   players: [
     {
       score: 0,
-      name: "???",
+      name: "Pawan",
     },
     {
       score: 0,
-      name: "???",
+      name: "Collin",
     },
   ],
   currentPlayerIndex: 0,
@@ -55,7 +55,21 @@ renderScoreboard();
 
 gameboard.addEventListener("click", (e) => {
   if (e.target.classList.contains("card")) {
-    e.target.classList.toggle("flipped");
-    console.log(e.target);
+    e.target.classList.add("flipped");
+    const flippedCards = document.querySelectorAll(".flipped");
+    console.log(flippedCards);
+    if (flippedCards.length < 2) {
+      return;
+    } else {
+      if (
+        flippedCards[0].getAttribute("cardname") ===
+        flippedCards[1].getAttribute("cardname")
+      ) {
+        setTimeout(() => {
+          flippedCards[0].classList.remove("flipped");
+          flippedCards[1].classList.remove("flipped");
+        }, 1000);
+      }
+    }
   }
 });
