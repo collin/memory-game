@@ -55,3 +55,10 @@ function renderScoreboard() {
 }
 
 renderScoreboard();
+
+gameboard.addEventListener("click", (e) => {
+  if (e.target.classList.contains("card")) {
+    e.target.classList.toggle("flipped");
+    console.log(e.target);
+  }
+});
