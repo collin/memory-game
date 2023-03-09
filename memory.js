@@ -26,20 +26,32 @@ const gameState = {
 const gameboard = document.querySelector("#gameboard");
 const scoreboard = document.querySelector("#scoreboard");
 
-for (const card of gameState.cards) {
-  const cardEl = document.createElement("div");
-  cardEl.classList.add("card");
-  cardEl.setAttribute("cardName", card.name);
-  cardEl.innerText = card.name;
-  gameboard.append(cardEl);
+function renderGameboard() {
+  for (const card of gameState.cards) {
+    const cardEl = document.createElement("div");
+    cardEl.classList.add("card");
+    cardEl.setAttribute("cardName", card.name);
+    cardEl.innerText = card.name;
+    gameboard.append(cardEl);
+  }
 }
 
-for (const player of gameState.players) {
-  const playerEl = document.createElement("div");
-  playerEl.classList.add("player");
-  playerEl.innerHTML = `
-    <label>Player: ${player.name}</label>
-    <p>Score: ${player.score}</p>
-  `;
-  scoreboard.append(playerEl);
+renderGameboard();
+
+function renderScoreboard() {
+  for (let i = 0; i < gameState.players.length; i++) {
+    const player = gameState.players[i];
+    const playerEl = document.createElement("div");
+    const isPlayersTurn = i === gameState.currentPlayerIndex;
+    playerEl.classList.add("player");
+    playerEl.innerHTML = `
+     ${isPlayersTurn ? `<span>Current</span>` : ``}
+      <label>Player: ${player.name}</label>
+      <p>Score: ${player.score}</p>
+    `;
+
+    scoreboard.append(playerEl);
+  }
 }
+
+renderScoreboard();

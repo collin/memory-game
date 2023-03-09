@@ -3,6 +3,7 @@
 # Notes
 
 ## Nouns
+
 - Grid of cards
   - Each Card
   - Each Card has a number
@@ -13,6 +14,7 @@
 - Player order
 
 ## Verbs
+
 - Game loop
   - Flip one cards over
     - Try to find its match
