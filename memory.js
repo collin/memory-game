@@ -1,6 +1,3 @@
-const player1Name = prompt("What is Player 1's Name?");
-const player2Name = prompt("What is Player 2's Name?");
-
 // a card
 const cards = [];
 // build up cards list
@@ -13,11 +10,11 @@ const gameState = {
   players: [
     {
       score: 0,
-      name: player1Name,
+      name: "???",
     },
     {
       score: 0,
-      name: player2Name,
+      name: "???",
     },
   ],
   currentPlayerIndex: 0,
