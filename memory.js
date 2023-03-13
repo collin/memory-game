@@ -56,7 +56,9 @@ renderScoreboard();
 gameboard.addEventListener("click", (e) => {
   if (e.target.classList.contains("card")) {
     e.target.classList.add("flipped");
-    const flippedCards = document.querySelectorAll(".flipped");
+    // use css to filter out removed
+    const flippedCards = document.querySelectorAll(".flipped:not(.removed)");
+
     console.log(flippedCards);
     if (flippedCards.length < 2) {
       return;
