@@ -100,9 +100,6 @@ gameboard.addEventListener("click", (e) => {
           renderScoreboard();
 
           // switch current player, using modulo to wrap around to 0
-          // TODO: do not switch player after a successful match
-          gameState.currentPlayerIndex =
-            (gameState.currentPlayerIndex + 1) % gameState.players.length;
         }, 1000);
       } else {
         setTimeout(() => {
