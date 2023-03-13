@@ -66,6 +66,22 @@ gameboard.addEventListener("click", (e) => {
         flippedCards[1].getAttribute("cardname")
       ) {
         setTimeout(() => {
+          gameState.players[gameState.currentPlayerIndex].score++;
+          // switch current player, using modulo to wrap around to 0
+          gameState.currentPlayerIndex =
+            (gameState.currentPlayerIndex + 1) % gameState.players.length;
+
+          // remove cards from board
+          flippedCards[0].classList.add("removed");
+          flippedCards[1].classList.add("removed");
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          // switch current player, using modulo to wrap around to 0
+          gameState.currentPlayerIndex =
+            (gameState.currentPlayerIndex + 1) % gameState.players.length;
+
+          // this happens if they don't match
           flippedCards[0].classList.remove("flipped");
           flippedCards[1].classList.remove("flipped");
         }, 1000);

@@ -18,3 +18,7 @@
 .flipped {
   background-color: cornflowerblue;
 }
+
+.removed {
+  opacity: .25;
+}
