@@ -48,12 +48,12 @@ function renderScoreboard() {
       <p>Score: ${player.score}</p>
     `;
 
-    //if all cards are matched, player with highest score wins
-    if (checkWin()) {
-      playerEl.innerHTML += `<p>${getWinner()}</p>`;
-    }
-
     scoreboard.append(playerEl);
+  }
+
+  // if all cards are matched, player with highest score wins
+  if (checkWin()) {
+    scoreboard.innerHTML += `<p>${getWinner()}</p>`;
   }
 }
 
