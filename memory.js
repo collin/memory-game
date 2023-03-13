@@ -36,6 +36,7 @@ function renderGameboard() {
 renderGameboard();
 
 function renderScoreboard() {
+  scoreboard.innerHTML = "";
   for (let i = 0; i < gameState.players.length; i++) {
     const player = gameState.players[i];
     const playerEl = document.createElement("div");
@@ -76,6 +77,7 @@ gameboard.addEventListener("click", (e) => {
           // remove cards from board
           flippedCards[0].classList.add("removed");
           flippedCards[1].classList.add("removed");
+          renderScoreboard();
         }, 1000);
       } else {
         setTimeout(() => {
@@ -86,6 +88,7 @@ gameboard.addEventListener("click", (e) => {
           // this happens if they don't match
           flippedCards[0].classList.remove("flipped");
           flippedCards[1].classList.remove("flipped");
+          renderScoreboard();
         }, 1000);
       }
     }
