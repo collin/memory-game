@@ -43,6 +43,7 @@ function renderGameboard() {
   }
 }
 
+shuffle()
 renderGameboard()
 
 function renderScoreboard() {
@@ -68,6 +69,17 @@ function renderScoreboard() {
 }
 
 renderScoreboard()
+
+function shuffle() {
+  // loop through the cards array
+  for (let i = gameState.cards.length - 1; i >= 0; i--) {
+    const randomIdx = Math.floor(Math.random() * i)
+    const currentCard = gameState.cards[i]
+    const cardAtRandomIdx = gameState.cards[randomIdx]
+    gameState.cards[i] = cardAtRandomIdx
+    gameState.cards[randomIdx] = currentCard
+  }
+}
 
 function checkWin() {
   const removedCards = document.querySelectorAll(".removed")
