@@ -108,6 +108,7 @@ gameboard.addEventListener("click", (e) => {
     if (flippedCards.length < 2) {
       return
     } else {
+      document.body.style.setProperty("pointer-events", "none")
       if (
         flippedCards[0].getAttribute("cardname") ===
         flippedCards[1].getAttribute("cardname")
@@ -121,6 +122,7 @@ gameboard.addEventListener("click", (e) => {
 
           renderScoreboard()
 
+          document.body.style.removeProperty("pointer-events")
           // switch current player, using modulo to wrap around to 0
         }, 1000)
       } else {
@@ -133,6 +135,8 @@ gameboard.addEventListener("click", (e) => {
           flippedCards[0].classList.remove("flipped")
           flippedCards[1].classList.remove("flipped")
           renderScoreboard()
+
+          document.body.style.removeProperty("pointer-events")
         }, 1000)
       }
     }
