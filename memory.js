@@ -1,4 +1,15 @@
-// a card
+/**
+ * How your time is spent as a programmer
+ *
+ * 25% Reading code (one file)
+ * 25% Navigating code (across files)
+ * 25% Reading documentation
+ * 25% Using the program being written
+ *
+ * 1-3% Writing/modifying code
+ */
+
+/** Build up cards and initial game state */
 const cards = []
 // build up cards list
 for (let cardCount = 0; cardCount < 8; cardCount++) {
@@ -20,19 +31,12 @@ const gameState = {
   currentPlayerIndex: 0
 }
 
+/** DOM References */
 const form = document.querySelector("form")
-form.addEventListener("submit", (e) => {
-  e.preventDefault()
-  const player1Name = e.target[0].value
-  const player2Name = e.target[1].value
-  gameState.players[0].name = player1Name
-  gameState.players[1].name = player2Name
-  renderScoreboard()
-})
-
 const gameboard = document.querySelector("#gameboard")
 const scoreboard = document.querySelector("#scoreboard")
 
+/** Render functions */
 function renderGameboard() {
   for (const card of gameState.cards) {
     const cardEl = document.createElement("div")
@@ -42,9 +46,6 @@ function renderGameboard() {
     gameboard.append(cardEl)
   }
 }
-
-shuffle()
-renderGameboard()
 
 function renderScoreboard() {
   scoreboard.innerHTML = ""
@@ -68,8 +69,6 @@ function renderScoreboard() {
   }
 }
 
-renderScoreboard()
-
 function shuffle() {
   // loop through the cards array
   for (let i = gameState.cards.length - 1; i >= 0; i--) {
@@ -81,10 +80,12 @@ function shuffle() {
   }
 }
 
+/** Check game state */
 function checkWin() {
   const removedCards = document.querySelectorAll(".removed")
   return removedCards.length === gameState.cards.length
 }
+
 function getWinner() {
   const player1Score = gameState.players[0].score
   const player2Score = gameState.players[1].score
@@ -98,47 +99,68 @@ function getWinner() {
   }
 }
 
+/** Respond to user action */
+function playerDidRemember(flippedCards) {
+  gameState.players[gameState.currentPlayerIndex].score++
+
+  // remove cards from board
+  flippedCards[0].classList.add("removed")
+  flippedCards[1].classList.add("removed")
+}
+
+function playerDidntRemember(flippedCards) {
+  // player did not remember
+  // switch current player, using modulo to wrap around to 0
+  gameState.currentPlayerIndex =
+    (gameState.currentPlayerIndex + 1) % gameState.players.length
+
+  // this happens if they don't match
+  flippedCards[0].classList.remove("flipped")
+  flippedCards[1].classList.remove("flipped")
+}
+
+/** Listen to DOM events */
 gameboard.addEventListener("click", (e) => {
-  if (e.target.classList.contains("card")) {
-    e.target.classList.add("flipped")
-    // use css to filter out removed
-    const flippedCards = document.querySelectorAll(".flipped:not(.removed)")
-
-    console.log(flippedCards)
-    if (flippedCards.length < 2) {
-      return
-    } else {
-      document.body.style.setProperty("pointer-events", "none")
-      if (
-        flippedCards[0].getAttribute("cardname") ===
-        flippedCards[1].getAttribute("cardname")
-      ) {
-        setTimeout(() => {
-          gameState.players[gameState.currentPlayerIndex].score++
-
-          // remove cards from board
-          flippedCards[0].classList.add("removed")
-          flippedCards[1].classList.add("removed")
-
-          renderScoreboard()
-
-          document.body.style.removeProperty("pointer-events")
-          // switch current player, using modulo to wrap around to 0
-        }, 1000)
-      } else {
-        setTimeout(() => {
-          // switch current player, using modulo to wrap around to 0
-          gameState.currentPlayerIndex =
-            (gameState.currentPlayerIndex + 1) % gameState.players.length
-
-          // this happens if they don't match
-          flippedCards[0].classList.remove("flipped")
-          flippedCards[1].classList.remove("flipped")
-          renderScoreboard()
-
-          document.body.style.removeProperty("pointer-events")
-        }, 1000)
-      }
-    }
+  const clickIsOnCard = e.target.classList.contains("card")
+  if (!clickIsOnCard) {
+    return
   }
+
+  e.target.classList.add("flipped")
+  // use css to filter out removed
+  const flippedCards = document.querySelectorAll(".flipped:not(.removed)")
+
+  console.log(flippedCards)
+  if (flippedCards.length < 2) {
+    return
+  }
+
+  document.body.style.setProperty("pointer-events", "none")
+  // set-up
+  setTimeout(() => {
+    const chosenCardsMatch =
+      flippedCards[0].getAttribute("cardname") ===
+      flippedCards[1].getAttribute("cardname")
+
+    if (chosenCardsMatch) {
+      playerDidRemember(flippedCards)
+    } else {
+      playerDidntRemember(flippedCards)
+    }
+    renderScoreboard()
+    document.body.style.removeProperty("pointer-events")
+  }, 1000)
 })
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault()
+  const player1Name = e.target[0].value
+  const player2Name = e.target[1].value
+  gameState.players[0].name = player1Name
+  gameState.players[1].name = player2Name
+  renderScoreboard()
+})
+
+/** Start the game */
+shuffle()
+renderGameboard()
